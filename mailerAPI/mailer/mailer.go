@@ -15,7 +15,7 @@ func sendEmail(sendTo string, subject string, msg string) {
 		"\r\n" + 
 		msg + "\r\n"
 	)
-	err := stmp.SendMail(smtpServerUrl + ":25", auth, senderEmailAccount, to, msg)
+	err := stmp.SendMail(smtpServerUrl + ":465", auth, senderEmailAccount, to, msg)
 	if err != nil {
 		log.Fatal(err)
 	}

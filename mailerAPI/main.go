@@ -7,6 +7,7 @@ import (
 	"os"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/microcosm-cc/bluemonday"
 	"mailer"
 )
 
@@ -26,8 +27,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func mailHandler(w http.ResponseWriter, r *http.Request) {
-
+	
     reqBody, _ := ioutil.ReadAll(r.Body) //read request body
+
+	reqBody = sanitizer := bluemonday.UGCPolicy().SanitizeBytes(reqBody) //sanitize reqBody
 
 	var message Message 
     json.Unmarshal(reqBody, &message); //convert to a message type
