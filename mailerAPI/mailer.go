@@ -1,21 +1,22 @@
-package mailer 
+package main 
 
 import (
 	"log"
 	"net/smtp"
-	"main"
 )
 
 func sendEmail(sendTo string, subject string, msg string) {
+
+	var emailBody []byte
 	auth := smtp.PlainAuth("", senderEmailAccount, smtpSecretPass, smtpServerUrl)
 
-	to := []sendTo
-	msg := []byte("To: "+ sendTo + "\r\n" + 
+	to := []string{sendTo}
+	emailBody = []byte("To: " + sendTo + "\r\n" + 
 		"Subject: " + subject + "\r\n" + 
 		"\r\n" + 
-		msg + "\r\n"
-	)
-	err := stmp.SendMail(smtpServerUrl + ":465", auth, senderEmailAccount, to, msg)
+		msg + "\r\n")
+
+	err := smtp.SendMail(smtpServerUrl + ":465", auth, senderEmailAccount, to, emailBody)
 	if err != nil {
 		log.Fatal(err)
 	}
