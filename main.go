@@ -40,7 +40,7 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 func handleRequest(port string) {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
-	myRouter.HandleFunc("/", homeHandler)
+	myRouter.HandleFunc("/", homeHandler).Methods("GET")
 	myRouter.HandleFunc("/", mailHandler).Methods("POST")
 	
 	if port == "" { port = ":8080" }
