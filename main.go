@@ -59,6 +59,7 @@ func handleRequest(port string) {
 
 	myRouter.HandleFunc("/", homeHandler).Methods("GET")
 	myRouter.HandleFunc("/", mailHandler).Methods("POST")
+	myRouter.Use(mux.CORSMethodMiddleware(myRouter))
 
 	if port == "" {
 		port = "8080"
