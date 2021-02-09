@@ -56,10 +56,9 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest(port string) {
 	myRouter := mux.NewRouter().StrictSlash(true)
-
+	myRouter.Use(mux.CORSMethodMiddleware(myRouter))
 	myRouter.HandleFunc("/", homeHandler).Methods("GET")
 	myRouter.HandleFunc("/", mailHandler).Methods("POST")
-	myRouter.Use(mux.CORSMethodMiddleware(myRouter))
 
 	if port == "" {
 		port = "8080"
