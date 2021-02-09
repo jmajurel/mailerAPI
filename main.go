@@ -33,7 +33,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func mailHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-
+	if r.Method == http.MethodOptions {
+		return
+	}
 	reqBody, _ := ioutil.ReadAll(r.Body) //read request body
 
 	sanitizer := bluemonday.UGCPolicy()
@@ -59,7 +61,7 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 func handleRequest(port string) {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homeHandler).Methods(http.MethodGet)
-	myRouter.HandleFunc("/", mailHandler).Methods(http.MethodPost)
+	myRouter.HandleFunc("/", mailHandler).Methods(http.MethodPost, http.MethodOptions)
 
 	myRouter.Use(mux.CORSMethodMiddleware(myRouter))
 
