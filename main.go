@@ -58,8 +58,8 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest(port string) {
 	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", homeHandler).Methods("GET")
-	myRouter.HandleFunc("/", mailHandler).Methods("POST")
+	myRouter.HandleFunc("/", homeHandler).Methods(http.MethodGet)
+	myRouter.HandleFunc("/", mailHandler).Methods(http.MethodPost)
 
 	myRouter.Use(mux.CORSMethodMiddleware(myRouter))
 
